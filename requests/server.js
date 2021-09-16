@@ -23,7 +23,7 @@ app.get('', async (req, res) => {
         },
     })
         .then(resp => { console.log(resp.data); res.send(resp.data) })
-        .catch(error => error)
+        .catch(error => console.log(error.code))
 })
 
 module.exports = app;

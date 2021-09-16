@@ -1,14 +1,16 @@
-# import the necessary packages
+import io
+from PIL import Image
+import numpy as np
+
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications import imagenet_utils
-from PIL import Image
-import numpy as np
-from flask import Flask, request
-import io
 
-# initialize our Flask application and the Keras model
+from flask import Flask, request
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 model = None
 
 
@@ -38,6 +40,7 @@ def prepare_image(image, target):
 @app.route("/predict", methods=["POST"])
 def predict():
 
+    # Not logging this when run in container
     print('recieved request to api')
 
     # ensure an image was properly uploaded to our endpoint
