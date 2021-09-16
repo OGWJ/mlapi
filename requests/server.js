@@ -17,13 +17,13 @@ app.get('', async (req, res) => {
     form.append('image', stream);
     const formHeaders = form.getHeaders();
 
-    axios.post('http://localhost:5000/predict', form, {
+    axios.post('http://api-express:4000/predict', form, {
         headers: {
             ...formHeaders,
         },
     })
-        .then(resp => { console.log(resp.data); res.send(resp.data) })
-        .catch(error => console.log(error.code))
+        .then(resp => { console.log(resp.status); res.send(resp.status) })
+        .catch(error => { console.log('err') })//console.log(error))
 })
 
 module.exports = app;
