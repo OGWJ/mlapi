@@ -1,14 +1,30 @@
 version: "3.9"  # optional since v1.27.0
 services:
-  api:
+  api-flask:
     build: api
     command: python server.py
     volumes:
       - ./api:/usr/app/
     ports:
       - "5000:5000"
+    expose:
+      - 5000 
     stdin_open: true
     tty: true
+
+  api-express:
+    build: api-express
+    command: node index.js
+    volumes:
+      - ./api-express:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - "4000:4000"
+    expose:
+      - 4000 
+    stdin_open: true
+    tty: true
+
   requests:
     build: requests
     command: node index.js
@@ -17,7 +33,10 @@ services:
       - /usr/app/node_modules
     ports:
       - "3000:3000"
+    expose:
+      - 3000
     stdin_open: true
     tty: true
-    links: 
-      - api
+    depends_on:
+      - api-express
+      - api-flask

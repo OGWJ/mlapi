@@ -9,9 +9,9 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require("form-data");
 
-app.get('', async (req, res) => {
+app.get('/api-express', async (req, res) => {
 
-    console.log('recieved request to request server')
+    console.log('sending request from requests server')
     const form = new FormData();
     const stream = fs.createReadStream(__dirname + '/laptop_stock.jpeg');
     form.append('image', stream);
@@ -22,8 +22,25 @@ app.get('', async (req, res) => {
             ...formHeaders,
         },
     })
-        .then(resp => { console.log(resp.status); res.send(resp.status) })
-        .catch(error => { console.log('err') })//console.log(error))
+        .then(resp => { res.sendStatus(200) })
+        .catch(error => { console.log(error) })
+})
+
+app.get('/api-flask', async (req, res) => {
+
+    console.log('sending request from requests server')
+    const form = new FormData();
+    const stream = fs.createReadStream(__dirname + '/laptop_stock.jpeg');
+    form.append('image', stream);
+    const formHeaders = form.getHeaders();
+
+    axios.post('http://api-flask:5000/predict', form, {
+        headers: {
+            ...formHeaders,
+        },
+    })
+        .then(resp => { res.sendStatus(200) })
+        .catch(error => { console.log(error.code) })
 })
 
 module.exports = app;

@@ -7,10 +7,10 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications import imagenet_utils
 
 from flask import Flask, request
-# from flask_cors import CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 model = None
 
 
