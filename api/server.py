@@ -37,6 +37,9 @@ def prepare_image(image, target):
 
 @app.route("/predict", methods=["POST"])
 def predict():
+
+    print('recieved request to api')
+
     # ensure an image was properly uploaded to our endpoint
     if request.method == "POST":
 
@@ -66,12 +69,8 @@ def predict():
             r = {"label": label, "probability": float(prob)}
             data["predictions"].append(r)
 
-            # indicate that the request was a success
-            # data["success"] = True
-
         print(data)
 
-    # return the data dictionary as a JSON response
     return data
 
 
